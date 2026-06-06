@@ -7,10 +7,16 @@
   </head>
   <body>
       <p id="paragraph"></p>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.13.7/underscore-min.js"></script>
     <script src="https://code.jquery.com/jquery-4.0.0.min.js"></script>
+    <script src="https://backbonejs.org/backbone-min.js"></script> 
     <script>
-      var p = $("#paragraph");
-      p.text("p");
+      var Fruit = Backbone.Model.Extend({});
+      var fruit = new Fruit({
+        type: "apple",
+        condition: "good"
+      });
+      console.log(fruit.get("type") + " " + fruit.get("condition"));
     </script>
   </body>
 </html>
