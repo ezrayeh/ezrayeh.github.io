@@ -1,16 +1,12 @@
-name: Automatic Code Styling
+name: Compile LESS to CSS
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
-  format:
+  build:
     runs-on: ubuntu-latest
-    
-    # Ensures GitHub Actions has the necessary token access to write back to your repo
     permissions:
       contents: write
 
@@ -23,11 +19,16 @@ jobs:
         with:
           node-version: '20'
 
-      # This targets your style.less file and any other stylesheets
-      - name: Run Prettier Formatter
-        run: npx prettier --write "**/style.less"
+      # Installs the official LESS engine compiler
+      - name: Install LESS compiler
+        run: npm install -g less
 
-      - name: Commit formatted changes
+      # Automatically turns your style.less file into a readable style.css file
+      - name: Compile LESS file
+        run: lessc style.less style.css
+
+      # Saves the new style.css file back to your repository automatically
+      - name: Commit compiled CSS
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "style: automatic styling for style.less"
+          commit_message: "style: automatically compiled style.less to style.css"
